@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Starter
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  StartFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Events:
+        HelloWorld:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: get
+    Metadata:
+      DockerTag: nodejs12.x-v1
+      DockerContext: ./start
+      Dockerfile: Dockerfile
+
+Outputs:
+  HelloWorldApi:
+    Description: "API Endpoint"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
